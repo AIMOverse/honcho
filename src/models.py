@@ -7,10 +7,13 @@ from sqlalchemy import (
     BigInteger,
     Boolean,
     CheckConstraint,
+    Column,
     DateTime,
     ForeignKey,
     Identity,
     Index,
+    JSON,
+    String,
     UniqueConstraint,
     text,
 )
@@ -289,3 +292,55 @@ class ActiveQueueSession(Base):
     last_updated: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True), default=func.now(), onupdate=func.now()
     )
+
+
+class Demographics(Base):
+    __tablename__ = "demographics"
+    id = Column(String, primary_key=True, index=True)
+    gender = Column(String, nullable=False)
+    age_range = Column(String, nullable=False)
+
+
+class HabitsPermissions(Base):
+    __tablename__ = "habits_permissions"
+    id = Column(String, primary_key=True, index=True)
+    bedtime = Column(String, nullable=False)
+    biometric_consent = Column(Boolean, nullable=False)
+
+
+class EmotionalState(Base):
+    __tablename__ = "emotional_state"
+    id = Column(String, primary_key=True, index=True)
+    primary_emotions = Column(JSONB, nullable=False)
+
+
+class MBTIPersonality(Base):
+    __tablename__ = "mbti_personality"
+    id = Column(String, primary_key=True, index=True)
+    energy = Column(String, nullable=False)
+    information = Column(String, nullable=False)
+    decision = Column(String, nullable=False)
+    lifestyle = Column(String, nullable=False)
+
+
+class StressLevel(Base):
+    __tablename__ = "stress_level"
+    id = Column(String, primary_key=True, index=True)
+    stress_level = Column(String, nullable=False)
+
+
+class Survey(Base):
+    __tablename__ = "survey"
+    id = Column(String, primary_key=True, index=True)
+    username = Column(String, nullable=False)
+    demographics_id = Column(String, ForeignKey("demographics.id"), nullable=False)
+    habits_permissions_id = Column(String, ForeignKey("habits_permissions.id"), nullable=False)
+    emotional_state_id = Column(String, ForeignKey("emotional_state.id"), nullable=False)
+    personality_assessment_id = Column(String, ForeignKey("mbti_personality.id"), nullable=False)
+    stress_assessment_id = Column(String, ForeignKey("stress_level.id"), nullable=False)
+
+    demographics = relationship("Demographics")
+    habits_permissions = relationship("HabitsPermissions")
+    emotional_state = relationship("EmotionalState")
+    personality_assessment = relationship("MBTIPersonality")
+    stress_assessment = relationship("StressLevel")

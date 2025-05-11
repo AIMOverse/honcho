@@ -348,3 +348,37 @@ class MessageBatchCreate(BaseModel):
     """Schema for batch message creation with a max of 100 messages"""
 
     messages: list[MessageCreate] = Field(..., max_length=100)
+
+
+class Demographics(BaseModel):
+    gender: str
+    age_range: str
+
+
+class HabitsPermissions(BaseModel):
+    bedtime: str
+    biometric_consent: bool
+
+
+class EmotionalState(BaseModel):
+    primary_emotions: list[str]
+
+
+class MBTIPersonality(BaseModel):
+    energy: str
+    information: str
+    decision: str
+    lifestyle: str
+
+
+class StressLevel(BaseModel):
+    stress_level: str
+
+
+class Survey(BaseModel):
+    username: str
+    demographics: Demographics
+    habits_permissions: HabitsPermissions
+    emotional_state: EmotionalState
+    personality_assessment: MBTIPersonality
+    stress_assessment: StressLevel
