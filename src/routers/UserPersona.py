@@ -6,7 +6,7 @@ from src.schemas import UserPersona, PersonaRequest, PersonaResponse
 
 router = APIRouter()
 
-@router.post("/survey", response_model=PersonaResponse)
+@router.post("/persona", response_model=PersonaResponse)
 async def create_survey(survey: PersonaRequest, db: AsyncSession = Depends(SessionLocal)):
     demographics = Demographics(**survey.demographics.dict())
     habits_permissions = HabitsPermissions(**survey.habits_permissions.dict())
