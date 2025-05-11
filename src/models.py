@@ -329,8 +329,8 @@ class StressLevel(Base):
     stress_level = Column(String, nullable=False)
 
 
-class Survey(Base):
-    __tablename__ = "survey"
+class UserPersona(Base):
+    __tablename__ = "user_personas"
     id = Column(String, primary_key=True, index=True)
     username = Column(String, nullable=False)
     demographics_id = Column(String, ForeignKey("demographics.id"), nullable=False)

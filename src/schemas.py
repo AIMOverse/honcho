@@ -375,10 +375,24 @@ class StressLevel(BaseModel):
     stress_level: str
 
 
-class Survey(BaseModel):
+class UserPersona(BaseModel):
     username: str
     demographics: Demographics
     habits_permissions: HabitsPermissions
     emotional_state: EmotionalState
     personality_assessment: MBTIPersonality
     stress_assessment: StressLevel
+
+class PersonaRequest(BaseModel):
+    username: str
+    demographics: Demographics
+    habits_permissions: HabitsPermissions
+    emotional_state: EmotionalState
+    personality_assessment: MBTIPersonality
+    stress_assessment: StressLevel
+
+
+class PersonaResponse(BaseModel):
+    success: bool
+    message: str
+    processed_data: dict
