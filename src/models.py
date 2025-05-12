@@ -298,52 +298,52 @@ class Demographics(Base):
     """Represents demographic information of a user."""
     __tablename__ = "demographics"
     id = Column(String, primary_key=True, index=True)
-    gender = Column(String, nullable=False)
-    age_range = Column(String, nullable=False)
+    gender = Column(String, nullable=False)  # Gender of the user (e.g., male, female, non_binary, decline_to_state)
+    age_range = Column(String, nullable=False)  # Age range of the user (e.g., <18, 18-25, 26-40, 41-60, 60+)
 
 
 class HabitsPermissions(Base):
     """Represents user habits and permissions for data collection."""
     __tablename__ = "habits_permissions"
     id = Column(String, primary_key=True, index=True)
-    bedtime = Column(String, nullable=False)
-    biometric_consent = Column(Boolean, nullable=False)
+    bedtime = Column(String, nullable=False)  # User's bedtime habit (e.g., before_22:00, around_23:00, after_midnight, irregular)
+    biometric_consent = Column(Boolean, nullable=False)  # Whether the user consents to biometric data collection (true/false)
 
 
 class EmotionalState(Base):
     """Represents the primary emotions of a user."""
     __tablename__ = "emotional_state"
     id = Column(String, primary_key=True, index=True)
-    primary_emotions = Column(JSONB, nullable=False)
+    primary_emotions = Column(JSONB, nullable=False)  # List of user's recent primary emotions (e.g., anxiety, happiness, calmness)
 
 
 class MBTIPersonality(Base):
     """Represents the MBTI personality assessment of a user."""
     __tablename__ = "mbti_personality"
     id = Column(String, primary_key=True, index=True)
-    energy = Column(String, nullable=False)
-    information = Column(String, nullable=False)
-    decision = Column(String, nullable=False)
-    lifestyle = Column(String, nullable=False)
+    energy = Column(String, nullable=False)  # User's energy type (e.g., extrovert, introvert)
+    information = Column(String, nullable=False)  # User's information processing style (e.g., sensing, intuitive)
+    decision = Column(String, nullable=False)  # User's decision-making style (e.g., thinking, feeling)
+    lifestyle = Column(String, nullable=False)  # User's lifestyle preference (e.g., judging, perceiving)
 
 
 class StressLevel(Base):
     """Represents the stress level of a user."""
     __tablename__ = "stress_level"
     id = Column(String, primary_key=True, index=True)
-    stress_level = Column(String, nullable=False)
+    stress_level = Column(String, nullable=False)  # User's stress level (e.g., 0.0-0.3: Beginner Sanctuary, >0.9: Endgame Warfare)
 
 
 class UserPersona(Base):
     """Represents the complete persona of a user."""
     __tablename__ = "user_personas"
     id = Column(String, primary_key=True, index=True)
-    username = Column(String, nullable=False)
-    demographics_id = Column(String, ForeignKey("demographics.id"), nullable=False)
-    habits_permissions_id = Column(String, ForeignKey("habits_permissions.id"), nullable=False)
-    emotional_state_id = Column(String, ForeignKey("emotional_state.id"), nullable=False)
-    personality_assessment_id = Column(String, ForeignKey("mbti_personality.id"), nullable=False)
-    stress_assessment_id = Column(String, ForeignKey("stress_level.id"), nullable=False)
+    username = Column(String, nullable=False)  # Username of the user
+    demographics_id = Column(String, ForeignKey("demographics.id"), nullable=False)  # Foreign key to demographics table
+    habits_permissions_id = Column(String, ForeignKey("habits_permissions.id"), nullable=False)  # Foreign key to habits_permissions table
+    emotional_state_id = Column(String, ForeignKey("emotional_state.id"), nullable=False)  # Foreign key to emotional_state table
+    personality_assessment_id = Column(String, ForeignKey("mbti_personality.id"), nullable=False)  # Foreign key to mbti_personality table
+    stress_assessment_id = Column(String, ForeignKey("stress_level.id"), nullable=False)  # Foreign key to stress_level table
 
     demographics = relationship("Demographics")
     habits_permissions = relationship("HabitsPermissions")
