@@ -351,20 +351,24 @@ class MessageBatchCreate(BaseModel):
 
 
 class Demographics(BaseModel):
+    """Represents demographic information of a user."""
     gender: str
     age_range: str
 
 
 class HabitsPermissions(BaseModel):
+    """Represents user habits and permissions for data collection."""
     bedtime: str
     biometric_consent: bool
 
 
 class EmotionalState(BaseModel):
+    """Represents the primary emotions of a user."""
     primary_emotions: list[str]
 
 
 class MBTIPersonality(BaseModel):
+    """Represents the MBTI personality assessment of a user."""
     energy: str
     information: str
     decision: str
@@ -372,10 +376,12 @@ class MBTIPersonality(BaseModel):
 
 
 class StressLevel(BaseModel):
+    """Represents the stress level of a user."""
     stress_level: str
 
 
 class UserPersona(BaseModel):
+    """Represents the complete persona of a user."""
     username: str
     demographics: Demographics
     habits_permissions: HabitsPermissions
@@ -384,6 +390,7 @@ class UserPersona(BaseModel):
     stress_assessment: StressLevel
 
 class PersonaRequest(BaseModel):
+    """Schema for requesting persona-related data."""
     username: str
     demographics: Demographics
     habits_permissions: HabitsPermissions
@@ -393,6 +400,7 @@ class PersonaRequest(BaseModel):
 
 
 class PersonaResponse(BaseModel):
+    """Schema for responding to persona-related requests."""
     success: bool
     message: str
     processed_data: dict

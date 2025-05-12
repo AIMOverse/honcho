@@ -295,6 +295,7 @@ class ActiveQueueSession(Base):
 
 
 class Demographics(Base):
+    """Represents demographic information of a user."""
     __tablename__ = "demographics"
     id = Column(String, primary_key=True, index=True)
     gender = Column(String, nullable=False)
@@ -302,6 +303,7 @@ class Demographics(Base):
 
 
 class HabitsPermissions(Base):
+    """Represents user habits and permissions for data collection."""
     __tablename__ = "habits_permissions"
     id = Column(String, primary_key=True, index=True)
     bedtime = Column(String, nullable=False)
@@ -309,12 +311,14 @@ class HabitsPermissions(Base):
 
 
 class EmotionalState(Base):
+    """Represents the primary emotions of a user."""
     __tablename__ = "emotional_state"
     id = Column(String, primary_key=True, index=True)
     primary_emotions = Column(JSONB, nullable=False)
 
 
 class MBTIPersonality(Base):
+    """Represents the MBTI personality assessment of a user."""
     __tablename__ = "mbti_personality"
     id = Column(String, primary_key=True, index=True)
     energy = Column(String, nullable=False)
@@ -324,12 +328,14 @@ class MBTIPersonality(Base):
 
 
 class StressLevel(Base):
+    """Represents the stress level of a user."""
     __tablename__ = "stress_level"
     id = Column(String, primary_key=True, index=True)
     stress_level = Column(String, nullable=False)
 
 
 class UserPersona(Base):
+    """Represents the complete persona of a user."""
     __tablename__ = "user_personas"
     id = Column(String, primary_key=True, index=True)
     username = Column(String, nullable=False)
