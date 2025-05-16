@@ -23,6 +23,7 @@ from src.schemas import UserPersona, PersonaRequest, PersonaResponse
 # Create a router instance for handling user persona-related endpoints
 router = APIRouter()
 
+
 @router.post("/persona", response_model=PersonaResponse)
 async def create_persona(persona: PersonaRequest, db: AsyncSession = Depends(SessionLocal)):
     """
@@ -54,12 +55,12 @@ async def create_persona(persona: PersonaRequest, db: AsyncSession = Depends(Ses
 
     # Create a UserPersona object linking all the related data
     user_personas = UserPersona(
-        username=persona.username,
-        demographics=demographics,
-        habits_permissions=habits_permissions,
-        emotional_state=emotional_state,
-        personality_assessment=personality_assessment,
-        stress_assessment=stress_assessment,
+        user_id=persona.user_id,
+        demographics_id=demographics.id,
+        habits_permissions_id=habits_permissions.id,
+        emotional_state_id=emotional_state.id,
+        personality_assessment_id=personality_assessment.id,
+        stress_assessment_id=stress_assessment.id,
     )
     db.add(user_personas)
     await db.commit()

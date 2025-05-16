@@ -392,7 +392,7 @@ class UserPersona(BaseModel):
 
 class PersonaRequest(BaseModel):
     """Schema for requesting persona-related data."""
-    username: str  # Username of the user
+    user_id: int  # User ID of the user
     demographics: Demographics  # Demographic information of the user
     habits_permissions: HabitsPermissions  # User's habits and permissions
     emotional_state: EmotionalState  # User's emotional state
