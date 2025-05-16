@@ -338,7 +338,7 @@ class UserPersona(Base):
     """Represents the complete persona of a user."""
     __tablename__ = "user_personas"
     id = Column(String, primary_key=True, index=True)
-    username = Column(String, nullable=False)  # Username of the user
+    user_id = Column(BigInteger, ForeignKey("users.id"), nullable=False)  # Foreign key to users table
     demographics_id = Column(String, ForeignKey("demographics.id"), nullable=False)  # Foreign key to demographics table
     habits_permissions_id = Column(String, ForeignKey("habits_permissions.id"), nullable=False)  # Foreign key to habits_permissions table
     emotional_state_id = Column(String, ForeignKey("emotional_state.id"), nullable=False)  # Foreign key to emotional_state table
