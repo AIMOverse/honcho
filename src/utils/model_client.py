@@ -28,6 +28,7 @@ class ModelProvider(str, Enum):
     CEREBRAS = "cerebras"
     GROQ = "groq"
     GEMINI = "gemini"
+    DEEPSEEK = "deepseek"
     # Add other providers as needed
 
 
@@ -39,6 +40,7 @@ DEFAULT_MODELS = {
     ModelProvider.CEREBRAS: "llama-3.3-70b",
     ModelProvider.GROQ: "llama-3.3-70b-versatile",
     ModelProvider.GEMINI: "gemini-2.0-flash-lite",
+    ModelProvider.DEEPSEEK: "deepseek-chat",
 }
 
 OPENAI_COMPATIBLE_PROVIDERS = [
@@ -46,6 +48,7 @@ OPENAI_COMPATIBLE_PROVIDERS = [
     ModelProvider.OPENROUTER,
     ModelProvider.CEREBRAS,
     ModelProvider.GROQ,
+    ModelProvider.DEEPSEEK,
 ]
 
 DEFAULT_TEMPERATURE = 0.0
@@ -64,7 +67,7 @@ class ModelClient:
 
     def __init__(
         self,
-        provider: ModelProvider = ModelProvider.ANTHROPIC,
+        provider: ModelProvider = ModelProvider.DEEPSEEK,
         model: Optional[str] = None,
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
