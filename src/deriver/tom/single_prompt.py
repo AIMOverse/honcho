@@ -9,8 +9,8 @@ from src.utils.model_client import ModelClient, ModelProvider
 
 logger = logging.getLogger(__name__)
 
-DEF_PROVIDER = ModelProvider.OPENAI
-DEF_MODEL = "gpt-4o"
+DEF_PROVIDER = ModelProvider.DEEPSEEK
+DEF_MODEL = "deepseek-chat"
 
 TOM_SYSTEM_PROMPT = """You are a system for analyzing conversations to make evidence-based inferences about user mental states.
 

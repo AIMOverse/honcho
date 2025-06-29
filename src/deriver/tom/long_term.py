@@ -15,11 +15,11 @@ from .embeddings import CollectionEmbeddingStore
 logger = logging.getLogger(__name__)
 
 # Constants for fact extraction
-FACT_EXTRACTION_PROVIDER = ModelProvider.GEMINI
-FACT_EXTRACTION_MODEL = "gemini-2.0-flash-lite"
+FACT_EXTRACTION_PROVIDER = ModelProvider.DEEPSEEK
+FACT_EXTRACTION_MODEL = "deepseek-chat"
 
-USER_REPRESENTATION_PROVIDER = ModelProvider.GROQ
-USER_REPRESENTATION_MODEL = "llama-3.3-70b-versatile"
+USER_REPRESENTATION_PROVIDER = ModelProvider.DEEPSEEK
+USER_REPRESENTATION_MODEL = "deepseek-chat"
 
 MAX_FACT_DISTANCE = 0.85
 
