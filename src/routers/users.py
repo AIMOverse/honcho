@@ -5,7 +5,6 @@ from fastapi import APIRouter, Body, Depends, Path, Query
 from fastapi_pagination import Page
 from fastapi_pagination.ext.sqlalchemy import paginate
 
-from src.agent import chat
 from src import crud, schemas
 from src.dependencies import db
 from src.exceptions import (
@@ -155,26 +154,3 @@ async def update_user(
     """Update a User's name and/or metadata"""
     updated_user = await crud.update_user(db, app_id=app_id, user_id=user_id, user=user)
     return updated_user
-
-
-@router.post(
-    "/{user_id}/chat",
-    response_model=schemas.DialecticResponse,
-    dependencies=[Depends(require_auth(app_id="app_id", user_id="user_id"))],
-)
-async def chat_user(
-        app_id: str = Path(..., description="ID of the app"),
-        user_id: str = Path(..., description="ID of the user"),
-        session_id: str = Query(..., description="Session ID for dialogue"),
-        queries: str | list[str] = Body(..., description="Single query string or list of strings"),
-):
-    """
-    Chat with the user in a specific session.
-    """
-    result = await chat(
-        app_id=app_id,
-        user_id=user_id,
-        session_id=session_id,
-        queries=queries
-    )
-    return result
