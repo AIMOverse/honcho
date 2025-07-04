@@ -5,6 +5,7 @@ from fastapi import APIRouter, Body, Depends, Path, Query
 from fastapi_pagination import Page
 from fastapi_pagination.ext.sqlalchemy import paginate
 
+from src.agent import chat
 from src import crud, schemas
 from src.dependencies import db
 from src.exceptions import (
@@ -27,9 +28,9 @@ router = APIRouter(
     dependencies=[Depends(require_auth(app_id="app_id", user_id="user_id"))],
 )
 async def create_user(
-    app_id: str = Path(..., description="ID of the app"),
-    user: schemas.UserCreate = Body(..., description="User creation parameters"),
-    db=db,
+        app_id: str = Path(..., description="ID of the app"),
+        user: schemas.UserCreate = Body(..., description="User creation parameters"),
+        db=db,
 ):
     """Create a new User"""
     user_obj = await crud.create_user(db, app_id=app_id, user=user)
@@ -42,12 +43,12 @@ async def create_user(
     dependencies=[Depends(require_auth(app_id="app_id", user_id="user_id"))],
 )
 async def get_users(
-    app_id: str = Path(..., description="ID of the app"),
-    options: schemas.UserGet = Body(
-        ..., description="Filtering options for the users list"
-    ),
-    reverse: bool = Query(False, description="Whether to reverse the order of results"),
-    db=db,
+        app_id: str = Path(..., description="ID of the app"),
+        options: schemas.UserGet = Body(
+            ..., description="Filtering options for the users list"
+        ),
+        reverse: bool = Query(False, description="Whether to reverse the order of results"),
+        db=db,
 ):
     """Get All Users for an App"""
     return await paginate(
@@ -61,12 +62,12 @@ async def get_users(
     response_model=schemas.User,
 )
 async def get_user(
-    app_id: str = Path(..., description="ID of the app"),
-    user_id: Optional[str] = Query(
-        None, description="User ID to retrieve. If not provided, users JWT token"
-    ),
-    jwt_params: JWTParams = Depends(require_auth()),
-    db=db,
+        app_id: str = Path(..., description="ID of the app"),
+        user_id: Optional[str] = Query(
+            None, description="User ID to retrieve. If not provided, users JWT token"
+        ),
+        jwt_params: JWTParams = Depends(require_auth()),
+        db=db,
 ):
     """
     Get a User by ID
@@ -103,9 +104,9 @@ async def get_user(
     ],
 )
 async def get_user_by_name(
-    app_id: str = Path(..., description="ID of the app"),
-    name: str = Path(..., description="Name of the user to retrieve"),
-    db=db,
+        app_id: str = Path(..., description="ID of the app"),
+        name: str = Path(..., description="Name of the user to retrieve"),
+        db=db,
 ):
     """Get a User by name"""
     user = await crud.get_user_by_name(db, app_id=app_id, name=name)
@@ -124,9 +125,9 @@ async def get_user_by_name(
     ],
 )
 async def get_or_create_user(
-    app_id: str = Path(..., description="ID of the app"),
-    name: str = Path(..., description="Name of the user to get or create"),
-    db=db,
+        app_id: str = Path(..., description="ID of the app"),
+        name: str = Path(..., description="Name of the user to get or create"),
+        db=db,
 ):
     """Get a User or create a new one by the input name"""
     try:
@@ -146,11 +147,34 @@ async def get_or_create_user(
     dependencies=[Depends(require_auth(app_id="app_id", user_id="user_id"))],
 )
 async def update_user(
-    app_id: str = Path(..., description="ID of the app"),
-    user_id: str = Path(..., description="ID of the user to update"),
-    user: schemas.UserUpdate = Body(..., description="Updated user parameters"),
-    db=db,
+        app_id: str = Path(..., description="ID of the app"),
+        user_id: str = Path(..., description="ID of the user to update"),
+        user: schemas.UserUpdate = Body(..., description="Updated user parameters"),
+        db=db,
 ):
     """Update a User's name and/or metadata"""
     updated_user = await crud.update_user(db, app_id=app_id, user_id=user_id, user=user)
     return updated_user
+
+
+@router.post(
+    "/{user_id}/chat",
+    response_model=schemas.DialecticResponse,
+    dependencies=[Depends(require_auth(app_id="app_id", user_id="user_id"))],
+)
+async def chat_user(
+        app_id: str = Path(..., description="ID of the app"),
+        user_id: str = Path(..., description="ID of the user"),
+        session_id: str = Query(..., description="Session ID for dialogue"),
+        queries: str | list[str] = Body(..., description="Single query string or list of strings"),
+):
+    """
+    Chat with the user in a specific session.
+    """
+    result = await chat(
+        app_id=app_id,
+        user_id=user_id,
+        session_id=session_id,
+        queries=queries
+    )
+    return result
